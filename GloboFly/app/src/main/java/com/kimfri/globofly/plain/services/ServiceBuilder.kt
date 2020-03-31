@@ -1,12 +1,11 @@
 package com.kimfri.globofly.plain.services
 
-import android.os.Build
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.logging.HttpLoggingInterceptor
 import java.util.*
 
 object ServiceBuilder {
@@ -27,6 +26,9 @@ object ServiceBuilder {
     }
 
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
+//        .writeTimeout(5, TimeUnit.SECONDS)
+//        .readTimeout(5, TimeUnit.SECONDS)
+//        .connectTimeout(15, TimeUnit.SECONDS) All operations including redirecting an so forth
         .addInterceptor(headerInterceptor)
         .addInterceptor(logger)
 
