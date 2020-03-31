@@ -18,4 +18,7 @@ fun main() {
     // returns the FIRST number that satisfies the lambda
     val firstValGtTen = myNumbers.find(myPredicate)
     println("first: $firstValGtTen")
+
+    println("last: ${myNumbers.last(myPredicate)}")
+    println("last again: ${myNumbers.last { it < 10 }}")
 }
