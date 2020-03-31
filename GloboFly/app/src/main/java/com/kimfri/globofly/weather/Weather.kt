@@ -1,6 +1,7 @@
 package com.kimfri.globofly.weather
 
-import com.kimfri.globofly.weather.response.CurrentWeatherResponse
+
+import com.kimfri.globofly.weather.response.*
 import com.kimfri.globofly.weather.services.WeatherApiService
 import com.kimfri.globofly.weather.services.WeatherServiceBuilder
 import retrofit2.Call
@@ -8,7 +9,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 fun main() {
-    getWeather("Gothenburg")
+//    getWeather("Gothenburg")
+    getWeather("Stockholm")
 }
 
 fun getWeather(city: String) {
@@ -26,18 +28,25 @@ fun getWeather(city: String) {
             response: Response<CurrentWeatherResponse>
         ) {
             if (response.isSuccessful) {
-                printResponse(response.body())
+                displayData(response.body())
             }
         }
     })
 }
-
-private fun printResponse(currentWeatherResponse: CurrentWeatherResponse?) {
+private fun displayData(currentWeatherResponse: CurrentWeatherResponse?) {
     currentWeatherResponse?.let {
-        it.request?.let { request -> printData("Request", request.toString(), printer) }
-        it.location?.let { location -> printData("Location", location.toString(), printer) }
-        it.currentWeatherEntry?.let { currentWeatherEntry ->
-            printData("CurrentWeatherResponse", currentWeatherEntry.toString(), printer)
+        displayDataToCommmandLine(it.request)
+        displayDataToCommmandLine(it.location)
+        displayDataToCommmandLine(it.currentWeatherEntry)
+    }
+}
+private fun displayDataToCommmandLine(currentObj: WeatherData?) {
+    currentObj?.let {
+        when(it) {
+            is Request -> printData("Request", it.toString(), printer)
+            is Location -> printData("Location", it.toString(), printer)
+            is CurrentWeatherEntry -> printData("CWE", it.toString(), printer)
+            else -> println("Error")
         }
     }
 }
