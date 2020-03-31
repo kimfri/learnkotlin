@@ -16,4 +16,4 @@ data class Location(
     val localtimeEpoch: Int,
     @SerializedName("utc_offset")
     val utcOffset: String
-)
+): WeatherData

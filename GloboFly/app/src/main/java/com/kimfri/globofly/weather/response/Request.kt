@@ -8,4 +8,4 @@ data class Request(
     val query: String,
     val language: String,
     val unit: String
-)
+): WeatherData
