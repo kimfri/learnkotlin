@@ -9,53 +9,42 @@ import retrofit2.Response
 
 fun main() {
     getWeather("Gothenburg")
-    getSomeWeather()
 }
 
 fun getWeather(city: String) {
-    val weatherApiService
+    val weatherApiService//This is the interface!!
             = WeatherServiceBuilder.buildService(WeatherApiService::class.java)
-    val requestCall = weatherApiService.getCurrentWeather(city)
+    val requestCall = weatherApiService.getCurrentWeather(location = city)
 
-    requestCall.enqueue(object: Callback<CurrentWeatherResponse>{
-        override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) { println("Fail")}
+    requestCall.enqueue(object : Callback<CurrentWeatherResponse> {
+        override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) {
+            println("Fail")
+        }
+
         override fun onResponse(
             call: Call<CurrentWeatherResponse>,
             response: Response<CurrentWeatherResponse>
         ) {
-            if(response.isSuccessful) {
-                val currentWeatherResponse = response.body()
-                currentWeatherResponse?.let {
-                    val location = it.location
-                    println("Location: ${location.toString()}")
-
-                    val currentWeatherEntry = it.currentWeatherEntry
-                    currentWeatherEntry?.let {
-                        println("CurrentWeatherEntry found:")
-                        println(currentWeatherEntry.toString())
-                    }
-                }
-            }
-        }
-
-    })
-}
-
-fun getSomeWeather() {
-//    weatherApiService is the interface
-    val weatherApiService
-            = WeatherServiceBuilder.buildService(WeatherApiService::class.java)
-    val requestCall = weatherApiService.getSomething()
-
-    requestCall.enqueue(object: Callback<CurrentWeatherResponse>{
-        override fun onFailure(call: Call<CurrentWeatherResponse>, t: Throwable) { println("Fail")}
-        override fun onResponse(
-            call: Call<CurrentWeatherResponse>,
-            response: Response<CurrentWeatherResponse>
-        ) {
-            if(response.isSuccessful) {
-
+            if (response.isSuccessful) {
+                printResponse(response.body())
             }
         }
     })
 }
+
+private fun printResponse(currentWeatherResponse: CurrentWeatherResponse?) {
+    currentWeatherResponse?.let {
+        it.request?.let { request -> printData("Request", request.toString(), printer) }
+        it.location?.let { location -> printData("Location", location.toString(), printer) }
+        it.currentWeatherEntry?.let { currentWeatherEntry ->
+            printData("CurrentWeatherResponse", currentWeatherEntry.toString(), printer)
+        }
+    }
+}
+
+private fun printData(header: String, message: String, action: (String, String) -> Unit) {
+    action(header, message)
+}
+
+private val printer: (String, String) -> Unit =
+    { header, message -> println("$header: $message") }
