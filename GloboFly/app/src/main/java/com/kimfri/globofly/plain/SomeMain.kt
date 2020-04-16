@@ -1,9 +1,6 @@
 package com.kimfri.globofly.plain
 
-import com.kimfri.globofly.plain.services.Destination
-import com.kimfri.globofly.plain.services.DestinationService
-import com.kimfri.globofly.plain.services.MessageService
-import com.kimfri.globofly.plain.services.ServiceBuilder
+import com.kimfri.globofly.plain.services.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,6 +65,7 @@ fun uploadNewDestination() {
         description = "The heart of Scandinavia"
     )
 
+//    val destinationService = ServiceBuilder.buildService(DestinationService::class.java)
     val destinationService = ServiceBuilder.buildService(DestinationService::class.java)
     val requestCall = destinationService.addDestnination(newDestination)
     requestCall.enqueue(object: Callback<Destination> {
@@ -138,6 +136,7 @@ fun loadSpecificDestination(id: Int) {
 fun loadDestinations() {
    val destinationService=
        ServiceBuilder.buildService(DestinationService::class.java)
+
 //    val requestCall = destinationService.getDestinationList()
 //    val requestCall = destinationService.getDestinationList("India", "2")
 

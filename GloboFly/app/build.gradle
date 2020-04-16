@@ -40,4 +40,7 @@ dependencies {
 
 //    Added logging
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+//    rxkotlin
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }
