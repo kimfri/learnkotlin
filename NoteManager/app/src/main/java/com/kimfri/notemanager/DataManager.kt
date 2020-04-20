@@ -1,12 +1,13 @@
 package com.kimfri.notemanager
 
-class DataManager {
+object DataManager {
     val courses = HashMap<String, CourseInfo>()
     val notes = ArrayList<NoteInfo>()
 
     //The init block will ALWAYS run when an instance of DataManager is instantiated
     init {
         initializeCourses()
+        initilizeNotes()
     }
 
     private fun initializeCourses() {
@@ -24,4 +25,17 @@ class DataManager {
         courses[course.courseId] = course
     }
 
+    private fun initilizeNotes() {
+//        val note = NoteInfo(course = courseId, title = "some title", text = "some text")
+        val title = "Tile - "
+        val text = "Text - "
+        courses.map {
+            var counter = 0
+            var note =  NoteInfo(it.value, "$title $counter", "$text $counter")
+            notes.add(note)
+            counter++
+            note =  NoteInfo(it.value, "$title $counter", "$text $counter")
+            notes.add(note)
+        }
+    }
 }
