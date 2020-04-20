@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            val orinalValue = textDisplayValue.text.toString().toInt()
-            val newValue = orinalValue * 2
+            val originalValue = textDisplayValue.text.toString().toInt()
+            val newValue = originalValue * 2
             textDisplayValue.text = newValue.toString()
-            Snackbar.make(view, "Value: $orinalValue NewValue: $newValue",
+            Snackbar.make(view, "Value: $originalValue NewValue: $newValue",
                 Snackbar.LENGTH_LONG)
                 .show()
         }
